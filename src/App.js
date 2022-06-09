@@ -8,7 +8,7 @@ function App() {
   const messageRef = useRef();
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log(messageRef.current.value);
+    socket.emit("send_message", {message: messageRef.current.value})
   }
   return (
     <div className="App">
