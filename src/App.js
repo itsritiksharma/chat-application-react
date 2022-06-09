@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import io from 'socket.io-client';
 import './App.css';
 
@@ -6,15 +6,23 @@ const socket = io.connect("http://localhost:3001")
 
 function App() {
   const messageRef = useRef();
+  const [message, setMessage] = useState([]);
+
   const submitHandler = (event) => {
     event.preventDefault();
     socket.emit("send_message", {message: messageRef.current.value})
   }
+  useEffect(()=>{
+    socket.on("received_message", (data)=>{
+      setMessage(data.message);
+    })
+  }, [socket])
   return (
     <div className="App">
       <form onSubmit={submitHandler}>
-        <input ref={messageRef} />
+        <input ref={messageRef}  placeholder='Message...' />
         <button type="submit">Send</button>
+        <h1>{message}</h1>
       </form>
     </div>
   );
