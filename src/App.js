@@ -1,9 +1,21 @@
+import React, {useRef} from 'react';
+import io from 'socket.io-client';
 import './App.css';
 
+const socket = io.connect("http://localhost:3001")
+
 function App() {
+  const messageRef = useRef();
+  const submitHandler = (event) => {
+    event.preventDefault();
+    console.log(messageRef.current.value);
+  }
   return (
     <div className="App">
-      <h1>Chat application</h1>
+      <form onSubmit={submitHandler}>
+        <input ref={messageRef} />
+        <button type="submit">Send</button>
+      </form>
     </div>
   );
 }
