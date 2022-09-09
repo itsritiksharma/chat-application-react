@@ -2,7 +2,7 @@ import React, {useRef, useEffect, useState} from 'react';
 import io from 'socket.io-client';
 import './App.css';
 
-const socket = io.connect("https://enigmatic-brook-90035.herokuapp.com")
+const socket = io.connect("https://chat-api-gtlk.onrender.com")
 
 function App() {
   const messageRef = useRef();
